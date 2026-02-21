@@ -6,16 +6,21 @@ app.use(express.json());
 
 const Notes = [];
 
-app.post('/notes', (req, res) => {
-    Notes.push(req.body);
-    console.log(Notes.length);
-    res.send('Create Some Notes');
+app.post('/notes',(req,res)=>{
+    let request = req.body;
+    Notes.push(request);
+    Count = Count+1;
+    res.send("Enter Your Notes");
 })
 
 app.get('/notes',(req,res)=>{
-    res.send("Notes");    
+    res.send(Notes);
 })
 
-app.listen(3000, () => {
-    console.log('Server is running successfully...');
+app.get('/count',(req,res)=>{
+    res.send(Notes.length);
+})
+
+app.listen(3000,()=>{
+    console.log("Server is running successfully");
 })
