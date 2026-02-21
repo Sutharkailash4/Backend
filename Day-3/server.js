@@ -8,6 +8,7 @@ const Notes = [];
 
 app.get('/',(req,res)=>{
     res.send("You server is start now");
+    console.log("Hello world");
 })
 
 app.post('/notes',(req,res)=>{
