@@ -13,7 +13,7 @@ app.post('/notes', (req, res) => {
 })
 
 app.get('/notes',(req,res)=>{
-    res.send(Notes);    
+    res.send("Notes");    
 })
 
 app.listen(3000, () => {
