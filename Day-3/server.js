@@ -6,6 +6,10 @@ app.use(express.json());
 
 const Notes = [];
 
+app.get('/',(req,res)=>{
+    req.send("You server is start now");
+})
+
 app.post('/notes',(req,res)=>{
     let request = req.body;
     Notes.push(request);
