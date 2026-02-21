@@ -7,13 +7,12 @@ app.use(express.json());
 const Notes = [];
 
 app.get('/',(req,res)=>{
-    req.send("You server is start now");
+    res.send("You server is start now");
 })
 
 app.post('/notes',(req,res)=>{
     let request = req.body;
     Notes.push(request);
-    Count = Count+1;
     res.send("Enter Your Notes");
 })
 
