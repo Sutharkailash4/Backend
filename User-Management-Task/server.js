@@ -11,8 +11,6 @@ app.get('/', (req, res) => {
 app.post('/user', (req, res) => {
     let response = req.body;
 
-    console.log(req.body);
-
     if (!response.id || response.id.trim() === "")
         res.send("Id is Required");
 
