@@ -6,6 +6,7 @@ const NoteData = [];
 
 app.post('/notes', (req, res) => {
     NoteData.push(req.body);
+    console.log(req.body);
     res.status(201).json({
         "Message": "Data is Added Successfully"
     })
