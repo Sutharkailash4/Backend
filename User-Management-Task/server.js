@@ -20,8 +20,8 @@ app.post('/user', (req, res) => {
     else if (!response.email || response.email.trim() === "")
         res.send("Email is Required");
 
-    else if (typeof response.age !== "number" || response.age <= 0)
-        res.send("Age is Required");
+    else if (isNaN(Number(response.age)) || Number(response.age) <= 0)
+         res.send("Age is Required");
 
     else if (typeof response.isActive !== "boolean")
         res.send("Active or not is Required");
