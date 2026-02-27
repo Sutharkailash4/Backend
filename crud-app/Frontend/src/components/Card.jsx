@@ -6,7 +6,7 @@ import { user_Context } from "../context/userContext";
 
 const Card = () => {
 
-    const { data, setData } = useContext(user_Context);
+    const { data, setData, updateData, setUpdateData } = useContext(user_Context);
 
     const getData = () => {
         axios.get("http://localhost:3000/api/users")
@@ -24,16 +24,15 @@ const Card = () => {
             })
     }
 
-    const updateData = (id) => {
-        axios.patch("http://localhost:3000/api/users/" + id, {
-            name: "kailash",
-            email: "suthar",
-            age: 1,
-            image: "kailash"
-        })
-            .then((res) => {
-                getData();
-            })
+    const update = (id, name, email, age, image) => {
+        const obj = {
+            id: id,
+            name: name,
+            email: email,
+            age: String(age),
+            image: image
+        }
+        setUpdateData(obj);
     }
 
     useEffect(() => {
@@ -54,7 +53,7 @@ const Card = () => {
                                 deleteData(elem._id);
                             }} className="remove">Remove</button>
                             <button onClick={() => {
-                                updateData(elem._id);
+                                update(elem._id, elem.name, elem.email, elem.age, elem.image);
                             }} className="update">Update</button>
                         </div>
                     </div>

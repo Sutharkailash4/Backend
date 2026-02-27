@@ -6,7 +6,7 @@ import UserContext from "./context/userContext.jsx";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 root.render(
-  <UserContext>
-    <App />
-  </UserContext>
+    <UserContext>
+      <App />
+    </UserContext>
 )

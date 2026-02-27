@@ -11,7 +11,7 @@ const Navbar = () => {
                 <li>About</li>
             </ul>
         </nav>
-    )
+    ) 
 }
 
 export default Navbar;

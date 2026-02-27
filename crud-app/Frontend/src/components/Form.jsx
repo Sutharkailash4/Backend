@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import { user_Context } from "../context/userContext";
@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const Form = () => {
 
-    const { data, setData } = useContext(user_Context);
+    const { data, setData, updateData, setUpdateData } = useContext(user_Context);
 
     const getData = () => {
         axios.get("http://localhost:3000/api/users")
@@ -26,24 +26,50 @@ const Form = () => {
         e.preventDefault();
         if (name.trim() === "" || email.trim() === "" || age.trim() === "" || image.trim() === "") return window.alert("Please Fill All Fileds")
         else {
-            const createData = () => {
-                axios.post("http://localhost:3000/api/users", {
+            if (!!updateData) {
+                axios.patch("http://localhost:3000/api/users/" + updateData.id, {
                     name: name,
                     email: email,
                     age: +age,
                     image: image
                 })
-                    .then((res) => {
-                        getData();
+                .then((res)=>{
+                    getData();
+                })
+                setName("");
+                setEmail("");
+                setAge("");
+                setImage("");
+                setUpdateData(null);
+            } else {
+                const createData = () => {
+                    axios.post("http://localhost:3000/api/users", {
+                        name: name,
+                        email: email,
+                        age: +age,
+                        image: image
                     })
+                        .then((res) => {
+                            getData();
+                        })
+                }
+                createData();
+                setName("");
+                setEmail("");
+                setAge("");
+                setImage("");
             }
-            createData();
-            setName("");
-            setEmail("");
-            setAge("");
-            setImage("");
         }
     }
+
+    useEffect(() => {
+        if (!!updateData) {
+            setName(updateData.name);
+            setEmail(updateData.email);
+            setAge(updateData.age);
+            setImage(updateData.image);
+        }
+    }, [updateData]);
 
     return (
         <form onSubmit={(e) => {
@@ -61,7 +87,14 @@ const Form = () => {
             <input name="image" type="text" placeholder="Enter Image URL" value={image} onChange={(text) => {
                 setImage(text.target.value);
             }} />
-            <button><span className="span-1">Create Card</span><span className="span-2">Create Card</span></button>
+            <button>
+                <span className="span-1">
+                    {updateData ? "Update Card" : "Create Card"}
+                </span>
+                <span className="span-2">
+                    {updateData ? "Update Card" : "Create Card"}
+                </span>
+            </button>
         </form>
     )
 }
