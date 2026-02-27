@@ -162,7 +162,8 @@ button:active {
   gap: 20px;
 }
 
-/* ---------- Tablets (max-width: 900px) ---------- */
+/* responsive */
+
 @media (max-width: 900px) {
   nav {
     padding-inline: 20px;
@@ -190,7 +191,6 @@ button:active {
   }
 }
 
-/* responsive */
 @media (max-width: 600px) {
   nav {
     flex-direction: column;
