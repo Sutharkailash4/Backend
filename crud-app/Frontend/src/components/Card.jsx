@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios';git 
+import axios from 'axios';
 import { useEffect } from "react";
 import { useContext } from "react";
 import { user_Context } from "../context/userContext";
@@ -19,6 +19,18 @@ const Card = () => {
 
     const deleteData = (id) => {
         axios.delete("http://localhost:3000/api/users/" + id)
+            .then((res) => {
+                getData();
+            })
+    }
+
+    const updateData = (id) => {
+        axios.patch("http://localhost:3000/api/users/" + id, {
+            name: "kailash",
+            email: "suthar",
+            age: 1,
+            image: "kailash"
+        })
             .then((res) => {
                 getData();
             })

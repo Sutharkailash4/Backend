@@ -45,18 +45,6 @@ const Form = () => {
         }
     }
 
-    const updateData = (id) => {
-        axios.patch("http://localhost:3000/api/users/" + id, {
-            name: "kailash",
-            email: "suthar",
-            age: 1,
-            image: "kailash"
-        })
-            .then((res) => {
-                getData();
-            })
-    }
-
     return (
         <form onSubmit={(e) => {
             handleSubmit(e);
