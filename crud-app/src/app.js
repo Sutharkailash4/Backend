@@ -75,4 +75,11 @@ app.delete("/api/users/:id", async (req, res) => {
     }
 })
 
+console.log(__dirname);
+
+app.use("*name", (req, res) => {
+    // res.sendFile("C:/Users/kailash/Desktop/Backend/crud-app/public/index.html");
+    res.sendFile(path.join(__dirname, "..", "/public/index.html"));
+})
+
 module.exports = app;   
