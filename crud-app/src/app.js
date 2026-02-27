@@ -1,9 +1,11 @@
+const path = require("path");
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const userModel = require("./model/userModel");
 app.use(express.json());
 app.use(cors());
+app.use(express.static("./public"));
 
 app.post("/api/users", async (req, res) => {
     const data = req.body;
@@ -75,11 +77,9 @@ app.delete("/api/users/:id", async (req, res) => {
     }
 })
 
-console.log(__dirname);
-
 app.use("*name", (req, res) => {
     // res.sendFile("C:/Users/kailash/Desktop/Backend/crud-app/public/index.html");
-    res.sendFile(path.join(__dirname, "..", "/public/index.html"));
+    res.sendFile(path.join(__dirname, "..", "public", "index.html"))
 })
 
 module.exports = app;   
