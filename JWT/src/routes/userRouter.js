@@ -25,13 +25,17 @@ userAuth.post("/register",async(req,res)=>{
                 },
                 process.env.JWT_SECRET
             )
+
+               res.cookie("JWT_TOKEN",token);
+
+            res.send("Cookie Set");
+
             res.status(201).json({
                 message : "User Created Successfully",
                 data,
                 token
             })
 
-            res.cookie("JWT_TOKEN",token);
 
         } else {
                 res.status(409).json({
