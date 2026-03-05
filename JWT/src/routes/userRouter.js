@@ -2,7 +2,6 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/user.model");
 const userAuth = express.Router();
-const cookieParser = require("cookie-parser");
 
 userAuth.post("/register",async(req,res)=>{
     try{
