@@ -29,7 +29,11 @@ userAuth.post("/register",async(req,res)=>{
                 message : "User Created Successfully",
                 data,
                 token
-            })} else {
+            })
+
+            res.cookie("JWT_TOKEN",token);
+
+        } else {
                 res.status(409).json({
                     message : "User With this email already exist"
                 })
