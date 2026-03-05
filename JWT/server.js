@@ -6,5 +6,5 @@ const database = require("./src/config/database");
 database();
 
 app.listen(port,()=>{
-    console.log("Server is running on ort 3000");
+    console.log("Server is running on port 3000");
 })

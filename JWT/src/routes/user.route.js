@@ -1,7 +1,7 @@
 const express = require("express");
 const userAuthentication = express.Router();
 const jwt = require("jsonwebtoken");
-const userModel = require("./models/user.model");
+const userModel = require(".././models/user.model");
 
 userAuthentication.post("/register",async(req,res)=>{
     try{
@@ -100,6 +100,45 @@ userAuthentication.delete("/users/:id",async(req,res)=>{
         res.status(400).json({
             message : "Something Went Wrong"
         })
+    }
+})
+
+userAuthentication.post("/getCookie",async(req,res)=>{
+    try{
+      res.status(200).json({
+        message : "Cookie Fethced Successfully",
+        value : req.cookies
+      })
+    }catch(error){
+      res.status(400).json({
+        message : "Something Went Wrong"
+      })
+    }
+})
+
+userAuthentication.post("/login",async(req,res)=>{
+    try{
+      const {email,password} = req.body;
+      const isEmailExits = await userModel.findOne({email});
+      if(!isEmailExits){
+        return res.status(409).json({
+            message : "Email Address Does Not Exits"
+        })
+      }
+      const isPasswordtrue =  await userModel.findOne({password});
+      if(!isPasswordtrue){
+        return res.status(409).json({
+            message : "Wrong Password"
+        })
+      }
+      res.status(201).json({
+        message : "Login Successfull"
+      })
+    }catch(error){
+       res.status(400).json({
+        message : "Something Went Wrong",
+        error
+       })
     }
 })
 
