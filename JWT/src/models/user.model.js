@@ -6,6 +6,6 @@ const userSchema = new mongoose.Schema({
     password : {type : String , require : true }
 });
 
-const userModel = mongooose.model("jsonwebtoken",userSchema);
+const userModel = mongoose.model("jsonwebtoken",userSchema);
 
 module.exports = userModel;

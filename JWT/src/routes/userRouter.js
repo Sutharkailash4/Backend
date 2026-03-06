@@ -1,10 +1,8 @@
 const express = require("express");
 const userAuthentication = express.Router();
-const userModel = require("userModel");
+const userModel = require(".././models/user.model");
 const crypto = require("crypto");
-const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
-const { strict } = require("assert");
 
 // Register
 
@@ -26,7 +24,7 @@ userAuthentication.post("/register",async (req,res)=>{
             const user = await userModel.create({
                 name : name,
                 email : email,
-                password :hash_password
+                password : hash_password
             })
             const token = jwt.sign(
                 {
@@ -37,9 +35,11 @@ userAuthentication.post("/register",async (req,res)=>{
             )
             res.cookie("token",token,{
                 httpOnly : true,
-                secure : true,
-                sameSite : strict,
-            });
+                secure : true
+            })
+            res.status(200).json({
+                message : 'User Register Successfully'
+            })
         }
    }catch(error){
         res.status(400).json({
@@ -63,7 +63,8 @@ userAuthentication.post("/login",async(req,res)=>{
                     message : "Email Does Not Exits."
                 })
             }
-            if(isEmailIsValid.password === password){
+            const hash_password = crypto.createHash("md5").update(password).digest("hex");
+            if(isEmailIsValid.password === hash_password){
                 res.status(200).json({
                     message : "Login Successfull"
                 })
