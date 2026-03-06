@@ -7,7 +7,7 @@ app.use("/api/authentication",userAuth);
 app.use(express.json());
 app.use(cookieParser());
 
-app.get("/users",async(req,res){
+app.get("/users",async(req,res)=>{
     try{
         const count = await userModel.find();
         if(count.length === 0){
@@ -17,7 +17,37 @@ app.get("/users",async(req,res){
         }
         res.status(200).json({
             message : "All User Fetch Successfully",
-            count;
+            count
+        })
+    }catch(error){
+        res.status(400).json({
+            message : "Something Went Wrong"
+        })
+    }
+})
+
+app.patch("/users/:id",async(req,res)=>{
+    try{
+        const id = req.params.id;
+        const {name,email,password} = req.body;
+        const user = await userModel.findByIdAndUpdate(id,{name,email,password});
+        res.status(200).json({
+            message : 'User Upadted Sccessfully',
+            user
+        })
+    }catch(error){
+        res.status(400).json({
+            message : "Something Went Wrong"
+        })
+    }
+})
+
+app.delete("/users/:id",async(req,res)=>{
+    try{
+        const id = req.params.id;
+        await userModel.findByIdAndDelete(id);
+        res.status(201).json({
+            message : "User Deleted Successfully"
         })
     }catch(error){
         res.status(400).json({
