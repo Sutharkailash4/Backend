@@ -1,7 +1,7 @@
 require("dotenv").config();
-const port  = 3000;
 const app = require("./src/app");
 const database = require("./src/config/database");
+const port = 3000;
 
 database();
 

@@ -5,8 +5,8 @@ const ConnectedToDatabase = () => {
     .then(()=>{
         console.log("Connected To Database Successfully");
     }).catch(()=>{
-        console.log("Failed To Connect");
+        console.log("Failed To Connect To Database");
     })
 }
 
-module.exports = ConnectedToDatabase;;
+module.exports = ConnectedToDatabase;
