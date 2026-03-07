@@ -14,14 +14,14 @@ userAuthentication.post("/register",async(req,res)=>{
         else if(!data.password || data.password.trim()==="" ) return res.status(409).json({message : "Password is Required"});
         else {
             const {name , email , password} = req.body;
-            const isUserAlreadyExists = await  userModel.findOne({email});
-            if(!isUserAlreadyExists){
+            const isUserAlreadyExists = await userModel.findOne({email});
+            if(isUserAlreadyExists){
                 return res.status(409).json({
                     message : "User With This Email Already Exists"
                 })
             }
             const hash_password = crypto.createHash("md5").update(password).digest("hex");
-            const user = userModel.create({
+            const user =await  userModel.create({
                 name : name,
                 email : email,
                 password : hash_password
@@ -33,7 +33,7 @@ userAuthentication.post("/register",async(req,res)=>{
                 },
                 process.env.JWT_SECRET
             )
-            req.cookies('cookie',token);
+            res.cookie('cookie',token);
             res.status(200).json({
                 message : "User Has been created successfully",
                 user
@@ -57,13 +57,13 @@ userAuthentication.post("/login",async(req,res)=>{
         else {
             const {email , password} = req.body;
             const isEmailExists = await userModel.findOne({email});
-            if(isEmailExists){
+            if(!isEmailExists){
                 return res.status(409).json({
                     message : "Invalid email",
                 })
             }
             const hash_password = crypto.createHash("md5").update(password).digest("hex");
-            if(isEmailExists.password === hash_password){{
+            if(isEmailExists.password === hash_password){
                 const token = jwt.sign(
                     {
                         id : isEmailExists._id,
@@ -71,11 +71,15 @@ userAuthentication.post("/login",async(req,res)=>{
                     },
                     process.env.JWT_SECRET
                 )
-                res.cookies("cookie",token);
+                res.cookie("cookie",token);
                 res.status(201).json({
                     message : "Login Successfull"
                 })
-            }}
+            } else {
+                res.status(409).json({
+                    message : "Wrong Password"
+                })
+            }
         }
     }catch(error){
         res.status(400).json({
